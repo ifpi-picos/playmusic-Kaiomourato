@@ -1,16 +1,16 @@
 package player;
 
 public class Track {
-    private String nameString;
+    private String name;
     private String path;
 
     public Track(String nomeString, String caminhoMusicaString) {
-        this.nameString = nomeString;
+        this.name = nomeString;
         this.path = caminhoMusicaString;
     }
 
     public String getName() {
-        return nameString;
+        return name;
     }
 
     public String getcaminhoMusicaString() {

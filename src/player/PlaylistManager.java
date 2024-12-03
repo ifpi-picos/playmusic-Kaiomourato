@@ -4,9 +4,9 @@ import java.util.List;
 import util.FileLoader;
 
 public class PlaylistManager {
-    private List<Album> albums;  // Agora gerencia álbuns
-    private int currentAlbumIndex;
-    private int currentTrackIndex;
+    private List<Album> albums;  // Gerencia álbuns
+    private int currentAlbumIndex; // índice que rastreia qual álbum está sendo acessado atualmente.
+    private int currentTrackIndex; // Um índice que indica qual faixa dentro do álbum atual está sendo reproduzida.
 
     public PlaylistManager(String musicFolderPath) {
         // Carrega os álbuns e músicas
@@ -21,6 +21,7 @@ public class PlaylistManager {
         }
     }    
 
+    // Retorna o álbum atual baseado no indice
     public Album getCurrentAlbum() {
         if (albums.isEmpty() || currentAlbumIndex == -1) {
             return null;
@@ -28,6 +29,7 @@ public class PlaylistManager {
         return albums.get(currentAlbumIndex);
     }
 
+    // retorna a musica atual do album
     public Track getCurrentTrack() {
         if (albums.isEmpty() || currentAlbumIndex == -1 || getCurrentAlbum().getTracks().isEmpty()) {
             return null;
@@ -36,7 +38,7 @@ public class PlaylistManager {
         if (currentTrackIndex >= 0 && currentTrackIndex < getCurrentAlbum().getTracks().size()) {
         return getCurrentAlbum().getTracks().get(currentTrackIndex);
     } else {
-        return null;  // Caso o índice seja inválido
+        return null; 
     }
 
     }
@@ -78,6 +80,7 @@ public class PlaylistManager {
         return getCurrentTrack();
     }
 
+    // Verifica se há álbuns carregados na lista.
     public boolean hasTracks() {
         return !albums.isEmpty();
     }

@@ -28,12 +28,14 @@ public class MainWindow extends JFrame {
         // Define a cor da Janela
         getContentPane().setBackground(new Color(144, 238, 144));
 
+        // Caminho para a pasta onde estão os álbuns
+        String musicFolderPath = "Resources/music"; 
+        playlistManager = new PlaylistManager(musicFolderPath);
+        
         // Inicializa o MusicPlayer
         musicPlayer = new MusicPlayer(playlistManager);
 
-        // Caminho para a pasta onde estão os álbuns
-        String musicFolderPath = "Resources/music"; // Modifique para o caminho correto
-        playlistManager = new PlaylistManager(musicFolderPath);
+        
 
         // Ícone de música
         JLabel iconLabel = new JLabel(new ImageIcon(Constants.ICON_PATH));
@@ -78,7 +80,11 @@ public class MainWindow extends JFrame {
     }
 
     private void playPause() {
-        musicPlayer.togglePlayPause();
+        if (musicPlayer.getClass() != null) {
+            musicPlayer.togglePlayPause(); // Alterna entre tocar e pausar
+        } else {
+            System.err.println("Nenhuma música carregada.");
+        }
     }
 
     private void playNext() {

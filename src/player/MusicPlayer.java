@@ -13,28 +13,43 @@ public class MusicPlayer {
 public MusicPlayer(PlaylistManager playlistManager) {
     this.playlistManager = playlistManager;
     isPlaying = false;
-}
+    clip = null;
 
-    // Método para tocar a música
-    public void playTrack(String trackPath) {
-        stop(); // Para qualquer música tocando antes de começar a nova
+    // Inicializa o clip, mas não o toca, para garantir que ele esteja pronto para reprodução
+    if (playlistManager.hasTracks()) {
+        Track firstTrack = playlistManager.getCurrentTrack();
         try {
-            // Caminho do arquivo WAV
-            File audioFile = new File(trackPath);
+            File audioFile = new File(firstTrack.getPath());
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-    
-            // Obtém o clip para reproduzir o áudio
             clip = AudioSystem.getClip();
             clip.open(audioStream);
-    
-            // Inicia a reprodução
-            clip.start();
-            isPlaying = true;
-            System.out.println("Reproduzindo: " + audioFile.getName());
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            System.err.println("Erro ao reproduzir a música: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar a música: " + e.getMessage());
         }
     }
+}
+
+
+    // Método para tocar a música
+public void playTrack(String trackPath) {
+    stop(); // Para qualquer música tocando antes de começar a nova
+    try {
+            // Caminho do arquivo WAV
+        File audioFile = new File(trackPath);
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+    
+            // Obtém o clip para reproduzir o áudio
+        clip = AudioSystem.getClip();
+        clip.open(audioStream);
+    
+            // Inicia a reprodução
+        clip.start();
+        isPlaying = true;
+        System.out.println("Reproduzindo: " + audioFile.getName());
+    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+        System.err.println("Erro ao reproduzir a música: " + e.getMessage());
+    }
+}
     
 
     // Método para parar a música
